@@ -5,22 +5,22 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/guildso/guildso.git
-  envs:
-   - key: APP_URL
-     value: ${APP_URL}
-   - key: DB_CONNECTION
-     value: "pgsql"
-   - key: DB_HOST
-     value: ${guildso-db.HOSTNAME}
-   - key: DB_PORT
-     value: ${guildso-db.PORT}
-   - key: DB_DATABASE
-     value: ${guildso-db.DATABASE}
-   - key: DB_USERNAME
-     value: ${guildso-db.USERNAME}
-     type: SECRET
-   - key: DB_PASSWORD
-     value: ${guildso-db.PASSWORD}
-     type: SECRET
+    envs:
+    - key: APP_URL
+      value: ${APP_URL}
+    - key: DB_CONNECTION
+      value: "pgsql"
+    - key: DB_HOST
+      value: ${guildso-db.HOSTNAME}
+    - key: DB_PORT
+      value: ${guildso-db.PORT}
+    - key: DB_DATABASE
+      value: ${guildso-db.DATABASE}
+    - key: DB_USERNAME
+      value: ${guildso-db.USERNAME}
+      type: SECRET
+    - key: DB_PASSWORD
+      value: ${guildso-db.PASSWORD}
+      type: SECRET
   databases:
   - name: guildso-db
