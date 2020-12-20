@@ -4,7 +4,7 @@ spec:
   - name: web
     git:
       branch: main
-      repo_clone_url: https://github.com/guildso/guildso.git
+      repo_clone_url: https://github.com/guildso/guild.git
     envs:
     - key: APP_URL
       value: ${APP_URL}
