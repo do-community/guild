@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire;
+use App\Models\Notification;
 use App\Models\Task;
 use Livewire\Component;
 use Livewire\Event;
@@ -54,6 +55,9 @@ class Tasks extends Component
             $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'Task Created Successfully!']);
 
             $this->resetInputFields();
+
+            $notification = new Notification;
+            $notification->notify('New Task Added', $task->name);
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to add tasks to this team!']);
         }
@@ -90,7 +94,7 @@ class Tasks extends Component
         $this->updateMode = false;
         $this->resetInputFields();
     }
-  
+
     /**
      * The attributes that are mass assignable.
      *
@@ -127,8 +131,12 @@ class Tasks extends Component
     public function delete($id)
     {
         if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'delete')) {
-            Task::find($id)->delete();
+            $task = Task::find($id);
+            $task->delete();
             $this->dispatchBrowserEvent('notification', ['type' => 'warning', 'message' => 'You have deleted the task!']);
+
+            $notification = new Notification;
+            $notification->notify('Task Deleted', $task->name);
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to delete tasks!']);
         }
@@ -140,12 +148,21 @@ class Tasks extends Component
         if (!$task->user_id) {
             $task->user_id = auth()->user()->id;
             $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You have assigned the task to yourself!']);
+
+            $notification = new Notification;
+            $notification->notify('Assigned Task', $task->name);
         } elseif($task->user_id != auth()->user()->id) {
             $task->user_id = auth()->user()->id;
             $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You have assigned the task to yourself!']);
+
+            $notification = new Notification;
+            $notification->notify('Assigned Task', $task->name);
         } else {
             $task->user_id = NULL;
             $this->dispatchBrowserEvent('notification', ['type' => 'notice', 'message' => 'You have unassigned the task!']);
+
+            $notification = new Notification;
+            $notification->notify('Unassigned Task', $task->name);
         }
         $task->save();
     }
