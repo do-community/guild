@@ -8,6 +8,8 @@ spec:
     envs:
     - key: APP_URL
       value: ${APP_URL}
+    - key: APP_DEBUG
+      value: false
     - key: DB_CONNECTION
       value: "pgsql"
     - key: DB_HOST
