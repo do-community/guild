@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Livewire;
-use App\Models\Shift;
+use App\Models\Notification;
 use App\Models\User;
+use App\Models\Shift;
 use Livewire\Component;
 
 class Shifts extends Component
@@ -31,6 +32,8 @@ class Shifts extends Component
         auth()->user()->startShift();
         $this->status = 'On Shift';
         $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You are now on shift!']);
+        $notification = new Notification;
+        $notification->notify('Shift Started', 'The user started thier shift!');
     }
 
     public function endShift()
@@ -38,6 +41,8 @@ class Shifts extends Component
         auth()->user()->endShift();
         $this->status = 'Not On Shift';
         $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You have ended your shift!']);
+        $notification = new Notification;
+        $notification->notify('Shift Ended', 'The user thier shift!');
     }
 
     public function changeShiftStatus()
