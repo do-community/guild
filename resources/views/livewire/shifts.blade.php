@@ -6,7 +6,7 @@
                     <h3 class="text-lg font-medium text-gray-900">Change your shift status!</h3>
 
                     <p class="mt-1 text-sm text-gray-600">
-                        <p>Current team {{ auth()->user()->currentTeam->name }}</p>
+                        <p>Current guild {{ auth()->user()->currentTeam->name }}</p>
                     </p>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                         <div class="px-4 py-5 bg-white sm:p-6">
                             <div class="grid grid-cols-6 gap-6">
                                 <div class="col-span-6 sm:col-span-4">
-                                    <h3>Total Hours Worked for current team: <span>{{  $totalHours }}</span></h3>
+                                    <h3>Total Hours Worked for current guild: <span>{{  $totalHours }}</span></h3>
                                     <label class="block text-sm font-medium text-gray-700" for="current_password">
                                         Currently not on shift.
                                     </label>

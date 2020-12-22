@@ -82,28 +82,28 @@
 
                     <div class="border-t border-gray-100"></div>
 
-                    <!-- Team Management -->
+                    <!-- Guild Management -->
                     @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Manage Team') }}
+                            {{ __('Manage Guild') }}
                         </div>
 
-                        <!-- Team Settings -->
+                        <!-- Guild Settings -->
                         <x-jet-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                            {{ __('Team Settings') }}
+                            {{ __('Guild Settings') }}
                         </x-jet-dropdown-link>
 
                         @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                             <x-jet-dropdown-link href="{{ route('teams.create') }}">
-                                {{ __('Create New Team') }}
+                                {{ __('Create New Guild') }}
                             </x-jet-dropdown-link>
                         @endcan
 
                         <div class="border-t border-gray-100"></div>
 
-                        <!-- Team Switcher -->
+                        <!-- Guild Switcher -->
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Switch Teams') }}
+                            {{ __('Switch Guild') }}
                         </div>
 
                         @foreach (Auth::user()->allTeams() as $team)

@@ -5,6 +5,7 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/guildso/guild.git
+    run_command: php artisan migrate ; heroku-php-apache2 public/
     envs:
     - key: APP_URL
       value: ${APP_URL}
