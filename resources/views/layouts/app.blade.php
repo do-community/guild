@@ -23,8 +23,8 @@
             @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
-            <header class="bg-gray-900 shadow">
-                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <header class="relative">
+                <div class="w-full px-4 py-6 pl-20 mx-auto">
                     {{ $header }}
                 </div>
             </header>
