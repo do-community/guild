@@ -5,12 +5,12 @@ spec:
     git:
       branch: main
       repo_clone_url: https://github.com/guildso/guild.git
-    run_command: heroku-php-apache2 public/
+    run_command: php artisan migrate --force ; heroku-php-apache2 public/
     envs:
     - key: APP_URL
       value: ${APP_URL}
     - key: APP_DEBUG
-      value: false
+      value: "false"
     - key: DB_CONNECTION
       value: "pgsql"
     - key: DB_HOST
