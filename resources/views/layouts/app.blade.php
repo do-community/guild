@@ -19,18 +19,18 @@
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased" id="app">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-50">
             @livewire('navigation-dropdown')
 
             <!-- Page Heading -->
-            <header class="relative">
-                <div class="w-full px-4 py-6 pl-20 mx-auto">
+            <header class="relative pl-64">
+                <div class="w-full px-5 py-6 mx-auto">
                     {{ $header }}
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="pl-64">
                 {{ $slot }}
             </main>
         </div>
