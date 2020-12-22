@@ -26,31 +26,40 @@ class Notification extends Model
     public function notify($title, $description)
     {
         $this->discordNotification($title, $description);
-        // To Do: Add Slack notifications
-        // $this->slackdNotification($title, $description);
+        $this->slackdNotification($title, $description);
     }
 
     public static function discordNotification($title, $description)
     {
-        $webhook = Notification::select('webhook')->where('type', 'discord')->where('team_id', auth()->user()->currentTeam->id)->whereNotNull('webhook')->firstOrFail();
-        try {
-            return Http::post($webhook->webhook, [
-                'content' => "👋 New event on " . config('app.name'),
-                'embeds' => [
-                    [
-                        'title' => $title,
-                        'description' => "**User:** " . auth()->user()->name . "\n **Description:** " . $description,
-                        'color' => '7506394',
-                    ]
-                ],
-            ]);
-        } catch (\Throwable $th) {
-            //throw $th;
+        $webhook = Notification::select('webhook')->where('type', 'discord')->where('team_id', auth()->user()->currentTeam->id)->whereNotNull('webhook')->first();
+        if(!empty($webhook->webhook)){
+            try {
+                return Http::post($webhook->webhook, [
+                    'content' => "👋 New event on " . config('app.name'),
+                    'embeds' => [
+                        [
+                            'title' => $title,
+                            'description' => "**User:** " . auth()->user()->name . "\n **Description:** " . $description,
+                            'color' => '7506394',
+                        ]
+                    ],
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         }
     }
 
     public static function slackdNotification($title, $description){
-        $webhook = Notification::select('webhook')->where('type', 'discord')->where('team_id', auth()->user()->currentTeam->id)->whereNotNull('webhook')->firstOrFail();
-        // To Do: Add Slack notifications
+        $webhook = Notification::select('webhook')->where('type', 'slack')->where('team_id', auth()->user()->currentTeam->id)->whereNotNull('webhook')->first();
+        if(!empty($webhook->webhook)){
+            try {
+                return Http::post($webhook->webhook, [
+                    "text" => "👋 New event on " . config('app.name') . ":\n" . $title . "\n User: " . auth()->user()->name . "\n Description: " . $description,
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
     }
 }
