@@ -24,7 +24,7 @@
 
             <!-- Page Heading -->
             <header class="relative pl-64">
-                <div class="w-full px-5 py-6 mx-auto">
+                <div class="w-full p-5 mx-auto">
                     {{ $header }}
                 </div>
             </header>
