@@ -7,6 +7,8 @@ spec:
       repo_clone_url: https://github.com/guildso/guild.git
     run_command: php artisan migrate --force ; heroku-php-apache2 public/
     envs:
+    - key: APP_KEY
+      value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
     - key: APP_URL
       value: ${APP_URL}
     - key: APP_DEBUG
