@@ -34,9 +34,9 @@
                 @endforeach
                 @foreach (auth()->user()->currentTeam->teamShifts() as $member)
                     @if(!isset($member->shifts[0]->status) || $member->shifts[0]->status == 'off')
-                        <li class="px-10 py-4 mx-12 bg-white border border-gray-200 rounded">
+                        <li class="p-5 mx-0 bg-white border border-gray-100 rounded-lg shadow-sm">
                             <div class="flex items-center space-x-4 lg:space-x-6">
-                                <a href="#_" class="relative">
+                                <a href="#_" class="relative flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20">
                                     <img class="w-16 h-16 rounded-full lg:w-20 lg:h-20"
                                     src="{{ $member->profile_photo_url }}"
                                     alt="">
