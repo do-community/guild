@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\ShiftLog;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,6 +71,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Shift');
     }
 
+    public function shiftLogs()
+    {
+        return $this->hasMany('App\Models\ShiftLog');
+    }
+
     public function startShift()
     {
         $shift = $this->shifts()->where('team_id', $this->currentTeam->id)->exists();
@@ -104,6 +110,7 @@ class User extends Authenticatable
     {
         $shift = $this->shifts()->where('team_id', $this->currentTeam->id)->whereNotNull('started_at')->firstOrFail();
         $now = new Carbon;
+        $shift_started = $shift->started_at;
         $totalHours = $now->diffInMinutes($shift->started_at, true);
         $totalHours = $totalHours/60;
         $shift->total_hours += $totalHours;
@@ -112,6 +119,7 @@ class User extends Authenticatable
 
         try {
             $shift->save();
+            $this->logShift($shift_started ,$now, $totalHours);
             return true;
         } catch (\Throwable $th) {
             throw $th;
@@ -135,5 +143,16 @@ class User extends Authenticatable
             return round($shift->total_hours, 2);
         }
         return 0;
+    }
+
+    public function logShift($started_at, $now, $totalHours)
+    {
+        $log = new ShiftLog;
+        $log->started_at = $started_at;
+        $log->finished_at = $now;
+        $log->total_hours = $totalHours;
+        $log->team_id = $this->currentTeam->id;
+        $log->user_id = auth()->user()->id;
+        $log->save();
     }
 }
