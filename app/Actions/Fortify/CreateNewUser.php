@@ -40,8 +40,11 @@ class CreateNewUser implements CreatesNewUsers
 
                 // Else, we can assign that user to the first team
                 } else {
-                    $user->teams()->attach(Team::first(), ['role' => 'member']);
-                    $user->switchTeam(Team::first());
+                    $team = Team::first();
+                    $user->teams()->attach($team, ['role' => 'member']);
+                    $user->current_team_id = $team->id;
+                    $user->save();
+                    $user->switchTeam($team);
                 }
 
             });
