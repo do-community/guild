@@ -33,7 +33,17 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
             ]), function (User $user) {
-                $this->createTeam($user);
+
+                // If this is the first user we will create a team with the user
+                if(User::count() == 1){
+                    $this->createTeam($user);
+
+                // Else, we can assign that user to the first team
+                } else {
+                    $user->teams()->attach(Team::first(), ['role' => 'member']);
+                    $user->switchTeam(Team::first());
+                }
+
             });
         });
     }
