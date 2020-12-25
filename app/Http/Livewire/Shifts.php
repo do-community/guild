@@ -5,13 +5,26 @@ use App\Models\Notification;
 use App\Models\User;
 use App\Models\Shift;
 use Livewire\Component;
+use App\Traits\WithShift;
 
 class Shifts extends Component
 {
+    use WithShift;
+
     public $timer;
     public $action;
     public $status;
     public $totalHours;
+    public $onShift;
+
+    // Events
+    const SHIFT_CHANGED = 'shiftChanged';
+    const TOGGLE_SHIFT = 'toggleShift';
+
+    protected $listeners = [
+        self::TOGGLE_SHIFT,
+        self::SHIFT_CHANGED
+    ];
 
     public function render()
     {
@@ -34,6 +47,7 @@ class Shifts extends Component
         $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You are now on shift!']);
         $notification = new Notification;
         $notification->notify('Shift Started', 'The user started thier shift!');
+        $this->emit(self::SHIFT_CHANGED, true);
     }
 
     public function endShift()
@@ -43,9 +57,10 @@ class Shifts extends Component
         $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'You have ended your shift!']);
         $notification = new Notification;
         $notification->notify('Shift Ended', 'The user thier shift!');
+        $this->emit(self::SHIFT_CHANGED, false);
     }
 
-    public function changeShiftStatus()
+    public function toggleShift()
     {
         if (auth()->user()->isOnShift()) {
             $this->endShift();
