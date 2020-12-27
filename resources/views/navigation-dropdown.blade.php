@@ -19,6 +19,10 @@
                     ✅ <span class="pl-2 text-sm">Tasks</span>
                 </a>
 
+                <a href="{{ route('badges') }}" class="@if(request()->routeIs('badges')){{ 'text-gray-800' }}@else{{ 'text-gray-400' }}@endif flex items-center pl-1 text-base font-semibold">
+                    🥇 <span class="pl-2 text-sm">Badges</span>
+                </a>
+
         </div>
     </div>
 

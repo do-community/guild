@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'App\Events\BadgeEarned' => [
+            'App\Listeners\Badges\BadgeEarnedSession',
+            'App\Listeners\Badges\AwardUserBadge',
+        ],
     ];
 
     /**
