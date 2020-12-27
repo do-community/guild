@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class TasksController extends Controller
 {
-    public function index(Type $var = null)
+    public function index()
     {
         return view('tasks.index');
     }

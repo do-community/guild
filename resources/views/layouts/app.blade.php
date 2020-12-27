@@ -35,6 +35,7 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewire('check-user-badges')
 
         @stack('modals')
 

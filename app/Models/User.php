@@ -76,6 +76,26 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ShiftLog');
     }
 
+    public function badges(){
+    	return $this->belongsToMany('App\Models\Badge');
+    }
+
+    public function hasBadge($badge){
+        return $this->badges()->where('badge_id', '=', $badge)->count();
+    }
+
+    public function awardBadge($badge){
+        $this->badges()->attach($badge);
+    }
+
+    public function removeBadge($badge){
+        $this->badges()->detach($badge);
+    }
+
+    public function completedTasks(){
+        return $this->tasks()->where('status', 'completed')->get();
+    }
+
     public function startShift()
     {
         $shift = $this->shifts()->where('team_id', $this->currentTeam->id)->exists();

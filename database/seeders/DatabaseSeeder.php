@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            //\Database\Seeders\BadgesTableSeeder::class,
+        ]);
         // \App\Models\User::factory(10)->create();
     }
 }
