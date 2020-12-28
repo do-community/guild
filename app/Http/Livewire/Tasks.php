@@ -8,8 +8,13 @@ use Livewire\Event;
 
 class Tasks extends Component
 {
-    public $tasks, $name, $description, $status, $task_id;
+    public $name, $description, $status, $task_id;
     public $updateMode = false;
+    public $numResults = 10;
+    public $sortField = 'created_at';
+    public $sortAsc = true;
+    public $taskStatus = ['To Do', 'Completed', 'In Progress'];
+    public $search = '';
 
     protected $rules = [
         'name' => 'required|min:6',
@@ -23,10 +28,29 @@ class Tasks extends Component
      */
     public function render()
     {
-        $this->tasks = Task::where('team_id', auth()->user()->currentTeam->id)->get();
-        return view('livewire.tasks');
+        $tasks = Task::query()
+                        ->where('name', 'like', '%'.$this->search.'%')
+                        ->where('team_id', auth()->user()->currentTeam->id)
+                        ->whereIn('status', $this->taskStatus )
+                        ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                        ->paginate($this->numResults);
+        return view('livewire.tasks', compact('tasks'));
     }
-  
+
+    public function loadMore(){
+        $this->numResults += 10;
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = ! $this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+        $this->sortField = $field;
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -166,4 +190,21 @@ class Tasks extends Component
         }
         $task->save();
     }
+
+    public function inProgressTask($id)
+    {
+        if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'read')) {
+            Task::find($id)->update(['status' => 'In Progress']);
+            $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'The task is now in progress!']);
+        }
+    }
+
+    public function completeTask($id)
+    {
+        if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'read')) {
+            Task::find($id)->update(['status' => 'Completed']);
+            $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'The task is now in progress!']);
+        }
+    }
+
 }

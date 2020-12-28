@@ -93,7 +93,7 @@ class User extends Authenticatable
     }
 
     public function completedTasks(){
-        return $this->tasks()->where('status', 'completed')->get();
+        return $this->tasks()->where('status', 'Completed')->get();
     }
 
     public function startShift()
