@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->foreignId('user_id')->nullable();
             $table->string('name');
             $table->text('description');
-            $table->string('status')->nullable();
+            $table->string('status')->default('To Do');
             $table->timestamps();
         });
     }
