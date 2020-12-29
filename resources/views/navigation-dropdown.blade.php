@@ -23,6 +23,10 @@
                     🥇 <span class="pl-2 text-sm">Badges</span>
                 </a>
 
+                <a href="{{ route('feed') }}" class="@if(request()->routeIs('feed')){{ 'text-gray-800' }}@else{{ 'text-gray-400' }}@endif flex items-center pl-1 text-base font-semibold">
+                    📖 <span class="pl-2 text-sm">Feed</span>
+                </a>
+
         </div>
     </div>
 
@@ -41,7 +45,13 @@
                     <img class="object-cover w-8 h-8 mr-2 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
                     <div class="flex flex-col">
                         <span class="font-semibold leading-none">{{ Auth::user()->name }}</span>
-                        <span class="text-xs leading-none">not on shift</span>
+                        <span class="text-xs leading-none">
+                            @if(auth()->user()->isOnShift())
+                                on shift
+                            @else
+                                not on shift
+                            @endif
+                        </span>
                     </div>
                 </div>
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>

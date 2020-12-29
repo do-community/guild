@@ -114,6 +114,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\ShiftLog');
     }
 
+    public function posts()
+    {
+        return $this->hasMany('App\Models\Post');
+    }
+
     public function badges(){
     	return $this->belongsToMany('App\Models\Badge');
     }
