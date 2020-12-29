@@ -35,6 +35,9 @@ class Badge extends Model
                     case 'shift':
                         $badge->checkShiftBadge($badge);
                         break;
+                    case 'feed':
+                        $badge->checkFeedBadge($badge);
+                        break;
                     default:
                         break;
                 }
@@ -63,6 +66,13 @@ class Badge extends Model
             if ($badge->requirement_value <= $total_hours->total_hours ) {
                 event(new BadgeEarned($badge));
             }
+        }
+    }
+
+    public function checkFeedBadge($badge)
+    {
+        if ($badge->requirement_value <= auth()->user()->posts()->count() ) {
+            event(new BadgeEarned($badge));
         }
     }
 }

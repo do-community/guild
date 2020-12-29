@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BadgesController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\TasksController;
 
@@ -40,5 +41,9 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         // Tasks routes
         Route::get('/badges/', [BadgesController::class, 'index'])
                     ->name('badges');
+
+        // Feed routes
+        Route::get('/feed/', [PostsController::class, 'index'])
+        ->name('feed');
     });
 });

@@ -62,7 +62,8 @@
                             <option value="team">Team</option>
                             <option value="shift">Shift</option>
                             <option value="task">Task</option>
-                            </select>
+                            <option value="feed">Feed</option>
+                        </select>
                     </div>
                     <div class="col-span-6 sm:col-span-4">
                         <label class="block text-sm font-medium text-gray-700" for="current_password">
