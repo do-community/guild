@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\UploadedFile;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -60,6 +61,43 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Update the user's profile photo.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @return void
+     */
+    public function updateProfilePhoto(UploadedFile $photo)
+    {
+        tap($this->profile_photo_path, function ($previous) use ($photo) {
+            $this->forceFill([
+                'profile_photo_path' => $photo->storePublicly(
+                    'profile-photos', ['disk' => $this->profilePhotoDisk()]
+                ),
+            ])->save();
+
+            if ($previous) {
+                \Illuminate\Support\Facades\Storage::disk($this->profilePhotoDisk())->delete($previous);
+            }
+        });
+    }
+
+    /**
+     * Get the disk that profile photos should be stored on.
+     *
+     * @return string
+     */
+    protected function profilePhotoDisk()
+    {
+        if (isset($_ENV['VAPOR_ARTIFACT_NAME'])) {
+            return  's3';
+        }
+        if(isset($_ENV['DO_SPACES']) && $_ENV['DO_SPACES'] == true ) {
+            return 'spaces';
+        }
+        return 'public';
+    }
 
     public function tasks()
     {

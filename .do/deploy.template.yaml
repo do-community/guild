@@ -39,6 +39,26 @@ spec:
       scope: RUN_TIME
       value: ${guildso-db.PASSWORD}
       type: SECRET
+    - key: DO_SPACES
+      scope: RUN_TIME
+      value: "false"
+    - key: DO_SPACES_KEY
+      scope: RUN_TIME
+      value: "YOUR_DO_SPACES_KEY"
+      type: SECRET
+    - key: DO_SPACES_SECRET
+      scope: RUN_TIME
+      value: "YOUR_DO_SPACES_SECRET"
+      type: SECRET
+    - key: DO_SPACES_ENDPOINT
+      scope: RUN_TIME
+      value: "YOUR_DO_SPACES_ENDPOINT"
+    - key: DO_SPACES_REGION
+      scope: RUN_TIME
+      value: "YOUR_DO_SPACES_REGION"
+    - key: DO_SPACES_BUCKET
+      scope: RUN_TIME
+      value: "YOUR_DO_SPACES_BUCKET"
   databases:
   - name: guildso-db
   jobs:
