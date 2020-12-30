@@ -60,9 +60,11 @@
                                         class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                                         Color
                                     </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">Edit</span>
-                                    </th>
+                                    @if(auth()->user()->hasTeamRole(auth()->user()->currentTeam, 'manager'))
+                                        <th scope="col" class="relative px-6 py-3">
+                                            <span class="sr-only">Edit</span>
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -84,14 +86,12 @@
                                                 Color
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                            @if(auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'update'))
+                                        @if(auth()->user()->hasTeamRole(auth()->user()->currentTeam, 'manager'))
+                                            <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                                 <button wire:click="edit({{ $badge->id }})" class="text-indigo-600 hover:text-indigo-900">Edit</button>
-                                            @endif
-                                            @if(auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'delete'))
                                                 <button wire:click="delete({{ $badge->id }})" class="text-indigo-600 hover:text-indigo-900">Delete</button>
-                                            @endif
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
 
