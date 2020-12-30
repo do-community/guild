@@ -165,8 +165,6 @@ class Badges extends Component
             $badge->delete();
             $this->dispatchBrowserEvent('notification', ['type' => 'warning', 'message' => 'You have deleted the badge!']);
 
-            $notification = new Notification;
-            $notification->notify('Dadge Deleted', $badge->name);
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to delete badges!']);
         }

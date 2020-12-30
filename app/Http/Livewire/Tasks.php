@@ -12,7 +12,7 @@ class Tasks extends Component
     public $updateMode = false;
     public $numResults = 10;
     public $sortField = 'created_at';
-    public $sortAsc = true;
+    public $sortAsc = false;
     public $taskStatus = ['To Do', 'Completed', 'In Progress'];
     public $search = '';
 

@@ -48,7 +48,7 @@ class Posts extends Component
             $this->resetInputFields();
 
             $notification = new Notification;
-            $notification->notify('New Post Added', $post->name);
+            $notification->notify('New Post Added', $post->body);
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to add posts to this team!']);
         }
@@ -64,9 +64,6 @@ class Posts extends Component
         if(auth()->user()->id == $post->user_id) {
             $post->delete();
             $this->dispatchBrowserEvent('notification', ['type' => 'warning', 'message' => 'You have deleted the post!']);
-
-            $notification = new Notification;
-            $notification->notify('Post Deleted', $post->name);
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to delete this post!']);
         }
