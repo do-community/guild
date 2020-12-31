@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Notification;
+use App\Events\NotificationSent;
 use App\Models\Post;
 use Livewire\Component;
 
@@ -47,8 +48,7 @@ class Posts extends Component
 
             $this->resetInputFields();
 
-            $notification = new Notification;
-            $notification->notify('New Post Added', $post->body);
+            event(new NotificationSent(new Notification, ['title' => 'New Post Added', 'description' => $post->body]));
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to add posts to this team!']);
         }
