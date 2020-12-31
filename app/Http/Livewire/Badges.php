@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Badge;
 use App\Models\Notification;
+use App\Events\NotificationSent;
 use Livewire\Component;
 
 class Badges extends Component
@@ -71,8 +72,7 @@ class Badges extends Component
 
             $this->resetInputFields();
 
-            $notification = new Notification;
-            $notification->notify('New Badge Added', $badge->name);
+            event(new NotificationSent(new Notification, ['title' => 'New Badge Added', 'description' => $badge->name]));
         } else {
             $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to add tasks to this team!']);
         }

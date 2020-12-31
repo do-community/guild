@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Notification;
 use App\Events\BadgeEarned;
+use App\Events\NotificationSent;
 use Illuminate\Database\Eloquent\Model;
 
 class Badge extends Model
@@ -49,18 +50,14 @@ class Badge extends Model
     public function checkTeamBadge($badge)
     {
         if ($badge->requirement_value <= auth()->user()->allTeams()->count() ) {
-            $notification = new Notification;
-            $notification->notify('The user won a new badge: ', $badge->name);
-            event(new BadgeEarned($badge));
+            $this->badgeEvents($badge);
         }
     }
 
     public function checkTaskBadge($badge)
     {
         if ($badge->requirement_value <= auth()->user()->completedTasks()->count() ) {
-            $notification = new Notification;
-            $notification->notify('The user won a new badge: ', $badge->name);
-            event(new BadgeEarned($badge));
+            $this->badgeEvents($badge);
         }
     }
 
@@ -69,9 +66,7 @@ class Badge extends Model
         $total_hours = auth()->user()->shifts()->first();
         if($total_hours){
             if ($badge->requirement_value <= $total_hours->total_hours ) {
-                $notification = new Notification;
-                $notification->notify('The user won a new badge: ', $badge->name);
-                event(new BadgeEarned($badge));
+                $this->badgeEvents($badge);
             }
         }
     }
@@ -79,9 +74,13 @@ class Badge extends Model
     public function checkFeedBadge($badge)
     {
         if ($badge->requirement_value <= auth()->user()->posts()->count() ) {
-            $notification = new Notification;
-            $notification->notify('The user won a new badge: ', $badge->name);
-            event(new BadgeEarned($badge));
+            $this->badgeEvents($badge);
         }
+    }
+
+    public function badgeEvents($badge)
+    {
+        event(new NotificationSent(new Notification, ['title' => 'The user won a new badge: ', 'description' => $badge->name]));
+        event(new BadgeEarned($badge));
     }
 }

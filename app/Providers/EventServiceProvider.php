@@ -22,6 +22,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\Badges\BadgeEarnedSession',
             'App\Listeners\Badges\AwardUserBadge',
         ],
+        'App\Events\NotificationSent' => [
+            'App\Listeners\Notifications\SlackNotification',
+            'App\Listeners\Notifications\DiscordNotification',
+        ],
     ];
 
     /**
