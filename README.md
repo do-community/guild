@@ -96,6 +96,32 @@ npm install && npm run dev
 php artisan migrate
 ```
 
+## 🧙‍♂️ Events and Queues (Optional)
+
+By default Guild.so uses Laravel Events for the Slack and Discord Notifications.
+
+To make things more optimal you can implement the `ShouldQueue` contact to the Notification Listeners so that the notifications are sent via a worker and not at the sime time when a user presses a button. To do that edit these two files:
+
+* `app/Listeners/Notifications/DiscordNotification.php` and update the class to:
+
+```
+class DiscordNotification implements ShouldQueue
+```
+
+* `app/Listeners/Notifications/SlackNotification.php` and update the class to:
+
+```
+class SlackNotification implements ShouldQueue
+```
+
+After that you need to specify your queue driver to either `database` or `redis` in your ENV faile or the DigitalOcean App platform, if you decided to go for Redis make sure to update your Redis ENV variables as well!
+
+Finally make sure to set the `php artisan queue:work` command to run at all times so that it could process your queues. If you are using the DigitalOcean App platform you can achieve this with a [Worker Component](https://www.digitalocean.com/docs/app-platform/concepts/worker/).
+
+For more information about Laravel events check out this tutorial here:
+
+**[Laravel Events](https://devdojo.com/course/laravel-events)**
+
 ## 🌪 Tails
 
 Guild's frontend was built using **[Tails](http://devdojo.com/tails), a new `kick-ass` drag-and-drop TailwindCSS page builder**!
