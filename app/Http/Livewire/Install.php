@@ -58,10 +58,10 @@ class Install extends Component
             'website' => $this->website ?? ''
         ]);
 
+        return redirect('dashboard?onboard=true');
 
 
-
-        return redirect('login');
+        //return redirect('login');
 
 
     }

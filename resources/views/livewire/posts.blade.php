@@ -1,7 +1,7 @@
 <div>
     @foreach($posts as $post)
         <div class="mt-6">
-            <div class="max-w-4xl px-10 py-6 bg-white rounded-lg shadow-md">
+            <div class="max-w-4xl px-10 py-6 bg-white border border-gray-100 rounded-lg shadow-sm">
                 <div class="flex items-center justify-between"><span
                         class="font-light text-gray-600">{{ $post->created_at->format('h:m - d/ M/Y') }}</span>
                 </div>

@@ -13,6 +13,7 @@ class Dashboard extends Component
     use WithShift;
 
     public $body;
+    public $onboardModal = false;
 
     protected $listeners = [
         Shifts::SHIFT_CHANGED // calls shiftChanged()
