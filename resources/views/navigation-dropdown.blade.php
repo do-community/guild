@@ -23,10 +23,6 @@
                     🥇 <span class="pl-2 text-sm">Badges</span>
                 </a>
 
-                <a href="{{ route('feed') }}" class="@if(request()->routeIs('feed')){{ 'text-gray-800' }}@else{{ 'text-gray-400' }}@endif flex items-center pl-1 text-base font-semibold">
-                    📖 <span class="pl-2 text-sm">Feed</span>
-                </a>
-
         </div>
     </div>
 

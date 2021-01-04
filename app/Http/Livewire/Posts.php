@@ -13,11 +13,8 @@ class Posts extends Component
 
     public $numResults = 20;
     protected $listeners = [
-        'load-more' => 'loadMore'
-    ];
-
-    protected $rules = [
-        'body' => 'required|max:500',
+        'load-more' => 'loadMore',
+        'feed-update' => 'render',
     ];
 
     public function render()
@@ -32,30 +29,6 @@ class Posts extends Component
 
     public function loadMore(){
         $this->numResults += 20;
-    }
-
-    public function store()
-    {
-        if (auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'create')) {
-            $this->validate();
-            $post = new Post;
-            $post->team_id = auth()->user()->currentTeam->id;
-            $post->user_id = auth()->user()->id;
-            $post->body = $this->body;
-            $post->save();
-
-            $this->dispatchBrowserEvent('notification', ['type' => 'success', 'message' => 'Post Created Successfully!']);
-
-            $this->resetInputFields();
-
-            event(new NotificationSent(new Notification, ['title' => 'New Post Added', 'description' => $post->body]));
-        } else {
-            $this->dispatchBrowserEvent('notification', ['type' => 'error', 'message' => 'You do not have permissions to add posts to this team!']);
-        }
-    }
-
-    private function resetInputFields(){
-        $this->body = '';
     }
 
     public function delete($id)

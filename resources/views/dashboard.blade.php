@@ -7,5 +7,4 @@
 
     <livewire:dashboard />
 
-
 </x-app-layout>

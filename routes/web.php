@@ -42,8 +42,5 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         Route::get('/badges/', [BadgesController::class, 'index'])
                     ->name('badges');
 
-        // Feed routes
-        Route::get('/feed/', [PostsController::class, 'index'])
-        ->name('feed');
     });
 });
