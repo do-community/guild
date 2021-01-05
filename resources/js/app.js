@@ -1,6 +1,7 @@
 require('./bootstrap');
 require('alpinejs');
 import hotkeys from 'hotkeys-js';
+import { EmojiButton } from '@joeattardi/emoji-button';
 
 hotkeys('ctrl+return, command+return', function() {
     window.livewire.emit('toggleShift');
@@ -125,3 +126,68 @@ window.addEventListener('notification', event => {
 window.addEventListener('show-notification', event => {
     showNotification( event.detail.amount, event.detail.message );
 });
+
+
+/********** END LIVEWIRE EVENT LISTENERS **********/
+
+/********** START EMOJI PICKER FUNCTIONALITY ***********/
+
+let currentEmojiInputLocation = 0;
+let selectedInput = null;
+let trigger = document.querySelectorAll('.emoji-trigger');
+
+// trigger.addEventListener('click', function(){
+//     console.log(this);
+//     //picker.togglePicker(trigger);
+// });
+
+console.log(trigger.length);
+
+// loop through each trigger
+for( var i=0; i<trigger.length; i++){
+
+
+    // add the click event for each trigger
+    trigger[i].addEventListener('click', function(){
+
+        let currentInput = this.parentNode.firstElementChild;
+        //console.log(this);
+        let picker = new EmojiButton();
+        picker.on('emoji', selection => {
+            // handle the selected emoji here
+            currentInput.value = currentInput.value + selection.emoji;
+        });
+
+        picker.togglePicker(this);
+    });
+    console.log(trigger[i].parentNode.querySelector('.emoji-trigger'));
+    // for each parent node .emoji-input add the keyup event
+    trigger[i].parentNode.firstElementChild.addEventListener('keyup', e => {
+        currentEmojiInputLocation = e.target.selectionStart;
+    });
+
+    trigger[i].parentNode.firstElementChild.addEventListener('focus', e => {
+        selectedInput = this;
+        setTimeout(function(){
+            console.log(e.target.selectionStart);
+            currentEmojiInputLocation = e.target.selectionStart;
+        }, 10)
+    });
+
+    // trigger[i].parentNode.firstElementChild.addEventListener('blur', e => {
+
+    //     currentEmojiInputLocation = 0;
+    // });
+
+}
+
+window.addEmojiInString = function(str, index, emoji){
+    return str.substring(0, index) + emoji + str.substring(index, str.length);
+}
+// trigger.addEventListener('click', function(){
+//     picker.togglePicker(trigger);
+// });
+
+
+
+/********** END EMOJI PICKER FUNCTIONALITY ***********/

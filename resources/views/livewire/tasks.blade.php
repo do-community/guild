@@ -1,16 +1,7 @@
 <div>
     <div class="mt-10 sm:mt-0">
         <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Craete a new task for your guild!</h3>
-
-                    <p class="mt-1 text-sm text-gray-600">
-                        Start by creating a task here.
-                    </p>
-                </div>
-            </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
+            <div class="mt-5 md:mt-0 md:col-span-3">
                 @if (session()->has('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}
@@ -58,7 +49,7 @@
                                     <polyline points="6 9 12 15 18 9" />
                                 </svg>
                             </button>
-    
+
                             <div x-show="open" @click.away="open = false"
                                 class="absolute top-0 right-0 z-40 block w-40 py-1 mt-12 -mr-1 overflow-hidden bg-white rounded-lg shadow-lg">
                                 <label class="flex items-center justify-start px-4 py-2 text-truncate hover:bg-gray-100">

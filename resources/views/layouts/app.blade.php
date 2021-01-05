@@ -5,10 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <title>@if(isset(auth()->user()->currentTeam->name)){{ auth()->user()->currentTeam->name }}@else{{ config('app.name', 'Guild') }}@endif</title>
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -27,7 +24,7 @@
                 <!-- Page Heading -->
                 <header class="relative pl-64">
                     <div class="w-full py-5 mx-auto sm:px-6">
-                        {{ $header }}
+                        {{ $header ?? '' }}
                     </div>
                 </header>
             @endif
