@@ -1,15 +1,27 @@
 <div>
-    <div class="mt-10 sm:mt-0">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium text-gray-900">Your Guild Badges!</h3>
-
-                    <p class="mt-1 text-sm text-gray-600">
-                        Win badges for your accomplishments.
-                    </p>
+    <div class="mt-0 sm:mt-0">
+        <div class="md:grid md:grid-cols-1 md:gap-6">
+            <div class="md:mt-0 md:col-span-2">
+                @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
                 </div>
-                <div class="px-4 pt-10 sm:px-0">
+                @endif
+                @if(auth()->user()->hasTeamRole(auth()->user()->currentTeam, 'manager'))
+                    <h3 class="pb-5 text-lg font-medium text-gray-900">Create a Badge</h3>
+                    @if($updateMode)
+                        @include('livewire.editBadge')
+                    @else
+                        @include('livewire.addBadge')
+                    @endif
+                    <br class="pb-24">
+                    <br class="pb-24">
+                @endif
+            </div>
+        </div>
+        <div class="flex flex-col mt-0">
+        <div class="pb-10 md:col-span-1">
+                <div class="px-4 pt-0 sm:px-0">
                     <h3 class="text-lg font-medium text-gray-900">Your Badges</h3>
                     <p class="mt-1 text-sm text-gray-600">
                         @forelse(auth()->user()->badges()->get() as $badge)
@@ -22,22 +34,13 @@
                     </p>
                 </div>
             </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                @if (session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session('message') }}
+        <div class="px-4 pb-10 sm:px-0">
+                    <h3 class="text-lg font-medium text-gray-900">Your Guild Badges!</h3>
+
+                    <p class="mt-1 text-sm text-gray-600">
+                        Win badges for your accomplishments.
+                    </p>
                 </div>
-                @endif
-                @if(auth()->user()->hasTeamRole(auth()->user()->currentTeam, 'manager'))
-                    @if($updateMode)
-                        @include('livewire.editBadge')
-                    @else
-                        @include('livewire.addBadge')
-                    @endif
-                @endif
-            </div>
-        </div>
-        <div class="flex flex-col mt-10">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">

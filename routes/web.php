@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ShiftsController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\NewsController;
 
 
 /*
@@ -41,6 +42,10 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         // Tasks routes
         Route::get('/badges/', [BadgesController::class, 'index'])
                     ->name('badges');
+
+        // News routes
+        Route::get('news', [NewsController::class, 'index'])
+                    ->name('news');
 
     });
 });
