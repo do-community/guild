@@ -64,7 +64,7 @@
                                 @include('partials.member-card', ['member' => auth()->user()])
                                 @foreach (auth()->user()->currentTeam->teamShifts() as $member)
                                     @if( auth()->user()->id != $member->id)
-                                        @include('partials.member-card', ['member' => $member])
+                                        @include('partials.member-card', ['member' => $member, 'key' => $member->id])
                                     @endif
                                 @endforeach
                             </ul>

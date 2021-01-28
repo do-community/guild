@@ -52,6 +52,8 @@ return [
         // Code and composer vendors are ready but nothing is built.
         'build' => [
             //
+            'npm:install',    // or yarn:install
+            'npm:production', // or yarn:production
         ],
         
         // Deployment is done but not live yet (before symlink)
