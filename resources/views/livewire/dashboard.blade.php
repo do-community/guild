@@ -20,7 +20,7 @@
                             <p class="pl-1 font-semibold text-gray-500">You are currently not on shift</p>
                         @endif
                         <div class="border border-green-300 rounded-md">
-                        @livewire('shifts')
+                        {{-- @livewire('shifts') --}}
                         </div>
                     </div>
                 </div>
